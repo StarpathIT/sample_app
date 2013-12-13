@@ -1,4 +1,25 @@
 <% provide(:title, 'Sign up') %>
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
-<div>Sign up</div>
+<h1>Sign up</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %> <!--form_for helper takes a block with one variable. |f| for form-->
+    <!-- Rails creates form tag using @user; Rails figures that @user is of Class User; Rails knows to construct  form with POST method-->
+      <%= render 'shared/error_messages' %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <!--name, email values allow Rails to construct initialization hash via params variable.
+      Email attribute of user hash-->
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+      <!--Values from here get passed to User controller as symbols-->
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
