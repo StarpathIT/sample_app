@@ -12,11 +12,11 @@ class UsersController < ApplicationController
     # params contains a hash of hashes (user attributes)
     # params[:user] is basically name: "Foo Bar", email: "foo@invalid", password: "foo", password_confirmation: "bar"
     # params[:user] passes all the submitted user data to User.new() which is unsafe
-    
     @user = User.new(user_params)  # auxillary method user_params
     if @user.save
-       flash[:success] = "Get Ready to Hate a Software!"
-      redirect_to @user
+        sign_in @user
+        flash[:success] = "Get Ready to Hate a Software!"
+        redirect_to @user
     else
       render 'new'
     end

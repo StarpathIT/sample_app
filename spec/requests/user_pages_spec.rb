@@ -4,10 +4,9 @@ describe "User pages" do
 
   subject { page }
 
+  # Sign Up test with Invalid Info
   describe "signup" do
-
     before { visit signup_path }
-
     let(:submit) { "Create my account" }
 
     describe "with invalid information" do
@@ -15,14 +14,15 @@ describe "User pages" do
         expect { click_button submit }.not_to change(User, :count) 
         # above line calculates User count before and after execution of click_button submit
       end
+
       describe "after submission" do
         before { click_button submit }
 
         it { should have_title('Sign up') }
         it { should have_content('error') }
       end
-    end
-
+    # end
+  # Sign Up test with Valid Info
     describe "with valid information" do
       before do
         fill_in "Name",         with: "Example User"
@@ -40,12 +40,10 @@ describe "User pages" do
         let(:user) { User.find_by(email: 'user@example.com') }
 
         it { should have_title(user.name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should have_selector('div.alert.alert-success', text: 'Get Ready') }
       end
     end
-  end
-
-  describe "profile page" do
+    describe "profile page" do
   # Replace with code to make a user variable
   let(:user) { FactoryGirl.create(:user) }
   before { visit user_path(user) }
@@ -54,4 +52,15 @@ describe "User pages" do
   it { should have_title(user.name) }
 end
 
+  describe "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by(email: 'user@example.com') }
+
+        it { should have_link('Sign out') }
+        it { should have_title(user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Get Ready') }
+      end
 end
+  end
+end
+  

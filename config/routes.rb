@@ -1,11 +1,16 @@
 SampleApp::Application.routes.draw do
-  resources :users # adds working /users/1 URL and 
+  # adds working /users/1 URL and 
   # includes all actions needed for the application
-  
+  # Also ensures Rails app responds to RESTFUL URLs.
+  # Ensures POST req to /users is handled by create action
+  resources :users 
+  resources :sessions, only: [:new, :create, :destroy] 
   root 'static_pages#home'
-  match '/signup', to: 'users#new', via: 'get'
-  match '/help', to: 'static_pages#help', via: 'get'
-  match '/about', to: 'static_pages#about', via: 'get'
+  match '/signup',  to: 'users#new',            via: 'get'
+  match '/signin',  to: 'sessions#new',         via: 'get'
+  match '/signout', to: 'sessions#destroy',     via: 'delete' # HTTP DELETE request
+  match '/help',    to: 'static_pages#help',    via: 'get'
+  match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
 
 
